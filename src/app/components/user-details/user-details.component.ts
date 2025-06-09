@@ -24,7 +24,7 @@ export class UserDetailsComponent {
 
     if (idParam !== null) {
       const id = Number(idParam);
-      this.userService.GetUserByID(id).subscribe((user) => (
+      this.userService.getUserByID(id).subscribe((user) => (
         this.user = user
       ));
     }
