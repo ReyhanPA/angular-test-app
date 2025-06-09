@@ -1,7 +1,7 @@
 <div
   class="mat-elevation-z8 p-2 rounded-lg overflow-hidden border border-gray-300"
 >
-  <mat-form-field class="w-full rounded-full">
+  <mat-form-field class="w-full">
     <mat-label>Filter</mat-label>
     <input
       matInput
@@ -20,7 +20,12 @@
     </button>
   </mat-form-field>
 
+  <div *ngIf="isLoading" class="flex justify-center py-10">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+
   <table
+    *ngIf="!isLoading"
     mat-table
     matSort
     [dataSource]="dataSource"
@@ -109,6 +114,7 @@
   </table>
 
   <mat-paginator
+    *ngIf="!isLoading"
     [pageSizeOptions]="[5, 10]"
     showFirstLastButtons
     aria-label="Select page of users"

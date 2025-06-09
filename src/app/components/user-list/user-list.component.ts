@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
 
@@ -27,11 +28,12 @@ import { User } from '../../models/user';
     MatInputModule,
     FormsModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css',
 })
-export class UserListComponent implements OnInit, AfterViewInit {
+export class UserListComponent implements OnInit {
   displayedColumns = [
     'name',
     'email',
@@ -42,6 +44,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
   ];
   dataSource = new MatTableDataSource<User>();
   filterText = '';
+  isLoading = true;
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
@@ -52,30 +55,29 @@ export class UserListComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.userService
-      .GetUsers()
-      .subscribe((users) => (this.dataSource.data = users));
-  }
+    this.userService.getUsers().subscribe({
+      next: (users) => {
+        this.dataSource.data = users;
 
-  ngAfterViewInit(): void {
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-    }
+        setTimeout(() => {
+          if (this.paginator) {
+            this.dataSource.paginator = this.paginator;
+          }
 
-    if (this.sort) {
-      this.dataSource.sort = this.sort;
+          if (this.sort) {
+            this.dataSource.sort = this.sort;
+            this.dataSource.sortingDataAccessor =
+              this.sortingAccessor.bind(this);
+          }
+        });
 
-      this.dataSource.sortingDataAccessor = (item, property) => {
-        switch (property) {
-          case 'city':
-            return item.address?.city || '';
-          case 'companyName':
-            return item.company?.name || '';
-          default:
-            return item[property as keyof User] as string;
-        }
-      };
-    }
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error fetching users', err);
+        this.isLoading = false;
+      },
+    });
   }
 
   announceSortChange(sortState: Sort): void {
@@ -93,5 +95,16 @@ export class UserListComponent implements OnInit, AfterViewInit {
   clearFilter(): void {
     this.filterText = '';
     this.applyFilter();
+  }
+
+  private sortingAccessor(item: User, property: string): string {
+    switch (property) {
+      case 'city':
+        return item.address?.city || '';
+      case 'companyName':
+        return item.company?.name || '';
+      default:
+        return item[property as keyof User] as string;
+    }
   }
 }
