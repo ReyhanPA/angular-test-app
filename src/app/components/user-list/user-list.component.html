@@ -83,7 +83,9 @@
       >
         City
       </th>
-      <td mat-cell *matCellDef="let element" class="hidden lg:table-cell">{{ element.address.city }}</td>
+      <td mat-cell *matCellDef="let element" class="hidden lg:table-cell">
+        {{ element.address.city }}
+      </td>
     </ng-container>
 
     <!-- Company Name Column -->
@@ -97,7 +99,9 @@
       >
         Company Name
       </th>
-      <td mat-cell *matCellDef="let element" class="hidden lg:table-cell">{{ element.company.name }}</td>
+      <td mat-cell *matCellDef="let element" class="hidden lg:table-cell">
+        {{ element.company.name }}
+      </td>
     </ng-container>
 
     <!-- Action Column -->
