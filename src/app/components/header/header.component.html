@@ -1,10 +1,5 @@
-<header class="flex justify-between items-center py-2 px-6 bg-cyan-500">
-    <h1>{{ title }}</h1>
-    <nav>
-        <ul>
-            <li *ngFor="let menuItem of menu">
-                <a [routerLink]="menuItem.path">{{ menuItem.name }}</a>
-            </li>
-        </ul>
-    </nav>
+<header
+  class="flex justify-between items-center bg-cyan-600 px-8 mx-8 mt-4 rounded-lg shadow-md h-12"
+>
+  <img src="assets/logo.png" alt="Logo" class="h-8" />
 </header>
