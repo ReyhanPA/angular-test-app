@@ -1,10 +1,44 @@
-<div>
-    <h2>User Details</h2>
-    <div *ngIf="user">
-        <p>Name: {{ user.name }}</p>
-        <p>Email: {{ user.email }}</p>
-        <p>Website: {{ user.website }}</p>
-        <p>City: {{ user.address.city }}</p>
-        <p>Company Name: {{ user.company.name }}</p>
-    </div>
+<!-- Breadcrumb -->
+<nav class="text-sm text-gray-600 mb-4" aria-label="Breadcrumb">
+  <ol class="list-reset flex">
+    <li>
+      <a routerLink="/" class="text-cyan-600 hover:text-cyan-800 cursor-pointer"
+        >User List</a
+      >
+    </li>
+    <li><span class="mx-2">/</span></li>
+    <li class="text-gray-500">User Detail</li>
+  </ol>
+</nav>
+
+<!-- Loading State -->
+<div *ngIf="isLoading" class="flex justify-center py-10">
+  <mat-spinner diameter="48"></mat-spinner>
+</div>
+
+<!-- Detail View -->
+<div *ngIf="!isLoading && user" class="flex justify-center">
+  <mat-card class="w-80">
+    <mat-card-header>
+      <div mat-card-avatar>
+        <div
+          class="rounded-full h-10 w-10 bg-contain bg-center bg-no-repeat border-2 border-cyan-600"
+          style="background-image: url('assets/profile.jpg')"
+        ></div>
+      </div>
+      <mat-card-title>{{ user.name }}</mat-card-title>
+      <mat-card-subtitle>{{ user.username }}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="assets/view-photo.jpeg" alt="Photo of a View" />
+    <mat-card-content>
+      <mat-chip-set class="pt-4">
+        <mat-chip>{{ user.email }}</mat-chip>
+        <mat-chip>{{ user.phone }}</mat-chip>
+        <mat-chip>{{ user.website }}</mat-chip>
+        <mat-chip>{{ user.address.city }}</mat-chip>
+        <mat-chip>{{ user.address.zipcode }}</mat-chip>
+        <mat-chip>{{ user.company.name }}</mat-chip>
+      </mat-chip-set>
+    </mat-card-content>
+  </mat-card>
 </div>
