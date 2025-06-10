@@ -1,6 +1,6 @@
 # Angular Test App
 
-This is an Angular application built with standalone components and Angular Material. It includes user listing and user detail views, using services to fetch data from an API.
+This is an Angular application built with standalone components and Angular Material. It includes user listing and user detail views, using services to fetch data from an API. You can view the deployment project at this link [angular-test-app](angular-test-app-eight.vercel.app)
 
 ## 🧰 Technologies Used
 
